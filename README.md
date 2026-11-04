@@ -49,7 +49,7 @@ In our tests, with CrewAI 1.15.35 and the `chromadb` client 1.5.9, against Chrom
 
 ## If CrewAI takes it in
 
-If CrewAI takes this backend in, this package will be deprecated and we will maintain the backend there.
+We have proposed this backend to CrewAI in [crewAIInc/crewAI#9090](https://github.com/crewAIInc/crewAI/issues/9090). If CrewAI takes it in, this package will be deprecated and we will maintain the backend there.
 
 ## License
 
