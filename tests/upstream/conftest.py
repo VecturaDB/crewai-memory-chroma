@@ -21,7 +21,11 @@ from crewai_memory_chroma import ChromaStorage
 
 
 if os.environ.get("CMC_BACKEND", "chroma") == "chroma":
-    _client = chromadb.HttpClient(host=os.environ.get("CMC_HOST", "127.0.0.1"), port=int(os.environ["CMC_PORT"]))
+    _client = (
+        chromadb.HttpClient(host=os.environ.get("CMC_HOST", "127.0.0.1"), port=int(os.environ["CMC_PORT"]))
+        if os.environ.get("CMC_PORT")
+        else chromadb.EphemeralClient()
+    )
     _run = uuid.uuid4().hex
     _created: set[str] = set()
 

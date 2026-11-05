@@ -1,4 +1,5 @@
-"""The server for the tests: a Chroma server, or a server with the API of Chroma, at $CMC_HOST (default 127.0.0.1):$CMC_PORT."""
+"""The client for the tests: with CMC_PORT, an HTTP client of a Chroma server, or of a server with the API of Chroma, at
+$CMC_HOST (default 127.0.0.1):$CMC_PORT; without it, the in-process client of the chromadb package (EphemeralClient)."""
 
 from __future__ import annotations
 
@@ -13,9 +14,15 @@ import pytest
 from crewai_memory_chroma import ChromaStorage
 
 
+def make_client() -> ClientAPI:
+    if os.environ.get("CMC_PORT"):
+        return chromadb.HttpClient(host=os.environ.get("CMC_HOST", "127.0.0.1"), port=int(os.environ["CMC_PORT"]))
+    return chromadb.EphemeralClient()
+
+
 @pytest.fixture(scope="session")
 def chroma_client() -> ClientAPI:
-    return chromadb.HttpClient(host=os.environ.get("CMC_HOST", "127.0.0.1"), port=int(os.environ["CMC_PORT"]))
+    return make_client()
 
 
 @pytest.fixture
